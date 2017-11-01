@@ -1,11 +1,76 @@
 <template>
-  <v-app>
-    <v-toolbar dark color="primary" >
+  <v-app id="inspire" dark>
+    <v-navigation-drawer
+      clipped
+      persistent
+      v-model="drawer"
+      enable-resize-watcher
+      app
+      temporary
+      fixed
+    >
+      <v-list dense>
+        <v-list-tile v-for="item in menuItems"
+        :key="item.title"
+        :to="item.link">
+          <v-list-tile-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{item.title}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-toolbar app fixed clipped-left>
+    <!-- <v-toolbar app  clipped-left> -->
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title ><router-link to="/home" append replace>DIGEST2017</router-link></v-toolbar-title>
+       
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn flat class="white--text"
+        v-for="item in menuItems"
+        :key="item.title"
+        :to="item.link"
+        >
+        <v-icon left>{{item.icon}}</v-icon>
+            {{item.title}}
+        </v-btn>
+     </v-toolbar-items>
+    </v-toolbar>
+
+    <main>
+      <router-view></router-view>
+    </main>
+      <!-- <v-content>
+        <v-container fluid fill-height>
+          <v-layout justify-center align-center>
+            <v-tooltip right>
+              <v-btn icon large :href="source" target="_blank" slot="activator">
+                <v-icon large>code</v-icon>
+              </v-btn>
+              <span>Source</span>
+            </v-tooltip>
+            content
+          </v-layout>
+        </v-container>
+      </v-content> -->
+    </main>
+
+    <v-footer app fixed>
+      <span>&copy; TOURdeHDR+2017</span>
+    </v-footer>
+  </v-app>
+</template>
+<!-- <v-app dark>
+    <v-toolbar  >
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title class="white--text">TOURdeHDR+2017 DIGEST</v-toolbar-title>
     <v-spacer></v-spacer>
     
-    <v-btn flat 
+    <v-btn flat class="white--text"
       v-for="item in menuItems"
     
       :to="item.link">
@@ -18,22 +83,33 @@
     
     <main>
     </main>
-    <!-- <v-footer dark color="primary"
+    <v-footer dark color="primary"
       :fixed="fixed" app >
       <span class="white--text " >&copy; TOURdeHDR+2017 DIGEST</span>
-    </v-footer> -->
-  </v-app>
-</template>
+    </v-footer>
+  </v-app> -->
 
 <script>
+//   export default {
+//     data: () => ({
+//       drawer: true
+//     }),
+//     props: {
+//       source: String
+//     }
+//   }
   export default {
+    // props: {
+    //   source: String
+    // },
     data () {
       return {
+        drawer: false,
         menuItems : [
-            {icon: 'home', title: 'TOP', link: '/top'},
-            {icon: 'apps', title: 'CATEGORies', link: '/categories'},
-            {icon: 'room', title: 'LOCATIONS', link: '/locations'},
-            {icon: 'view_list', title: 'LISTA', link: '/list'},
+            {icon: 'home', title: 'TOP', link: '/home'},
+            {icon: 'apps', title: 'STAGE', link: '/stage'},
+            // {icon: 'room', title: 'LOCATIONS', link: '/locations'},
+            // {icon: 'view_list', title: 'LISTA', link: '/list'},
           ]
        
       }
@@ -45,8 +121,18 @@
 
     }
   }
+
+
+
+   
 </script>
 
-<style>
+<style lang="stylus">
+  @import './stylus/main'
+  a{
+    text-decoration: none;
+  }
 
 </style>
+
+
