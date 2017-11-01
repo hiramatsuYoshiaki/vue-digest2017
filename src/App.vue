@@ -41,7 +41,7 @@
      </v-toolbar-items>
     </v-toolbar>
 
-    <main>
+    <main class="header-margin">
       <router-view></router-view>
     </main>
       <!-- <v-content>
@@ -102,6 +102,7 @@
     // props: {
     //   source: String
     // },
+    
     data () {
       return {
         drawer: false,
@@ -129,9 +130,8 @@
 
 <style lang="stylus">
   @import './stylus/main'
-  a{
-    text-decoration: none;
-  }
+  
+  
 
 </style>
 

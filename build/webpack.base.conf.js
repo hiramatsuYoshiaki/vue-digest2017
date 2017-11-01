@@ -9,6 +9,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  //resolve: { root: [ path.resolve('./web3/digest2017/') ] },
   entry: {
     app: './src/main.js'
   },

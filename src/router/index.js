@@ -52,6 +52,12 @@ export default new Router({
       name: 'Post',
       component: PostPhoto
     },
+    {
+      path: '/post/:id',
+      name: 'Post',
+      props: true,
+      component: PostPhoto
+    },
     // {
     //   path: '/meetup/new',
     //   name: 'CreateMeetup',
