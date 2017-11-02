@@ -61,6 +61,32 @@
 
     <v-footer app fixed>
       <span>&copy; TOURdeHDR+2017</span>
+      <v-spacer></v-spacer>
+       <!-- <v-icon>cloud_upload</v-icon> -->
+       
+      <v-btn
+        v-if="!userIsAuthenticated"
+        flat
+         @click="onLogin"
+        >
+        <v-icon left dark>lock_open</v-icon>
+        Login
+      </v-btn>
+      <v-btn
+        v-if="userIsAuthenticated"
+        flat
+         @click="onUpload"
+        >
+        <v-icon left dark>cloud_upload</v-icon>
+        Upload
+      </v-btn>
+       <v-btn
+          v-if="userIsAuthenticated"
+          flat
+          @click="onLogout">
+          <v-icon left dark>exit_to_app</v-icon>
+          Logout
+        </v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -108,17 +134,27 @@
         drawer: false,
         menuItems : [
             {icon: 'home', title: 'TOP', link: '/home'},
-            {icon: 'apps', title: 'STAGE', link: '/stage'},
-            // {icon: 'room', title: 'LOCATIONS', link: '/locations'},
-            // {icon: 'view_list', title: 'LISTA', link: '/list'},
-          ]
-       
+            {icon: 'apps', title: 'STAGE', link: '/stage'}
+        ],
       }
     },
     computed:{
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
 
     },
     methods:{
+      onLogout () {
+        this.$store.dispatch('logout')
+      },
+      onLogin () {
+        this.$router.push('/signin' )
+      },
+      onUpload () {
+        this.$router.push('/upload' )
+      },
+      
 
     }
   }

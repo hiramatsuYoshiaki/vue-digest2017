@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import StagePhoto from '@/components/digest/stagePhoto'
 import TitlePhoto from '@/components/digest/titlePhoto'
 import PostPhoto from '@/components/digest/postPhoto'
+import CreateStage from '@/components/digest/CreateStage'
+import Signin from '@/components/user/Signin'
 
 
 Vue.use(Router)
@@ -64,6 +66,12 @@ export default new Router({
     //   component: CreateMeetup,
     //   beforeEnter: AuthGuard
     // },
+    {
+      path: '/upload',
+      name: 'CreateStage',
+      component: CreateStage
+      // beforeEnter: AuthGuard
+    },
     // {
     //   path: '/meetups/:id',
     //   name: 'Meetup',
@@ -81,11 +89,11 @@ export default new Router({
     //   name: 'Signup',
     //   component: Signup
     // },
-    // {
-    //   path: '/signin',
-    //   name: 'Signin',
-    //   component: Signin
-    // }
+    {
+      path: '/signin',
+      name: 'Signin',
+      component: Signin
+    }
   ]
   // ,
 

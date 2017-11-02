@@ -1,6 +1,18 @@
 <template>
   <v-container >
-    <v-layout row wrap  class="content-inner" >
+
+    <v-layout>
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular
+          indeterminate
+          class="primary--text"
+          :width="7"
+          :size="70"
+          v-if="loading"></v-progress-circular>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap  class="content-inner" v-if="!loading">
       <v-flex xs12 sm11 md10 lg8 xl8>
       <!-- <v-flex  > -->
         <v-carousel style="cursor: pointer;" hide-controls class="carusel-style">
@@ -24,13 +36,13 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap >
+    <v-layout row wrap v-if="!loading">
       <v-flex xs12 sm11 md8 >
          <h5 class="white--text pt-3">TOURdeHDR+2017 STAGE LIST</h5>
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap v-for="meetup in meetups" :key="meetup.id" class="mb-2">
+    <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2" v-if="!loading">
       <!-- <v-flex xs12 sm10 md8 offset-sm1 offset-md2> -->
       <v-flex xs12 sm10 md8 >
         <v-card >
@@ -47,8 +59,14 @@
               <v-flex xs6 sm5 md9>
                 <v-card-title primary-title>
                   <div>
-                    <p class="white--text mb-0">STAGE {{ meetup.id }}</p>
+                    <!-- <p class="white--text mb-0">STAGE {{ meetup.id }}</p> -->
+                    <p class="white--text mb-0">STAGE {{ index }}</p>
+                    <p class="white--text mb-0">key {{ meetup.id }}</p>
                     <h5 class="white--text mb-0">{{ meetup.title }}</h5>
+                    <h5 class="white--text mb-0">{{ meetup.date   }}</h5>
+                    <h5 class="white--text mb-0">{{ meetup.location }}</h5>
+                    <!-- <h5 class="white--text mb-0">{{ meetup.description }}</h5> -->
+                   
                     <!-- <div>{{ meetup.date | date }}</div> -->
                   </div>
                 </v-card-title>
@@ -65,8 +83,6 @@
       </v-flex>
     </v-layout>
 
-
-    
     
    
   </v-container>
@@ -74,24 +90,31 @@
 
 <script>
 export default {
-  
-  data () {
-    return {
-      meetups: [
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2016/12/shishimai_title1.jpg',id:1, title:'獅子舞'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/02/kobe_again_title_stage2.jpg',id:2, title:'ＫＯＢＥ ＡＧＡＩＮ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/03/rusted_car_title2.jpg',id:3, title:'ＲＵＳＴＥＤ ＣＡＲ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2050/04/vintagecar_title1.jpg',id:4, title:'Vintage Car'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/04/retoro_car_title.jpg',id:5, title:'ＲＥＴＲＯ ＣＡＲ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/05/Stage6_title.jpg',id:6, title:'瀬戸埠頭の見える岬でＨＤＲ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/05/haruyoi_title2.jpg',id:7, title:'倉敷春宵あかり'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/08/tamanoFes_title21.jpg',id:8, title:'たまの港フェスティバルでＨＤＲ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/09/a-bombe-dome.jpg',id:9, title:'Ａ‐ＢＯＭＢ ＤＯＭＥ'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/10/broad_title3.jpg',id:10, title:'黒島ビーナスロード'},
-          {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/10/img2946_title10.jpg',id:11, title:'Building in Sky'}
-      ]
-    }
-  },
+  // data () {
+    // return {
+      // meetups: [
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2016/12/shishimai_title1.jpg',id:1, title:'獅子舞'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/02/kobe_again_title_stage2.jpg',id:2, title:'ＫＯＢＥ ＡＧＡＩＮ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/03/rusted_car_title2.jpg',id:3, title:'ＲＵＳＴＥＤ ＣＡＲ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2050/04/vintagecar_title1.jpg',id:4, title:'Vintage Car'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/04/retoro_car_title.jpg',id:5, title:'ＲＥＴＲＯ ＣＡＲ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/05/Stage6_title.jpg',id:6, title:'瀬戸埠頭の見える岬でＨＤＲ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/05/haruyoi_title2.jpg',id:7, title:'倉敷春宵あかり'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/08/tamanoFes_title21.jpg',id:8, title:'たまの港フェスティバルでＨＤＲ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/09/a-bombe-dome.jpg',id:9, title:'Ａ‐ＢＯＭＢ ＤＯＭＥ'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/10/broad_title3.jpg',id:10, title:'黒島ビーナスロード'},
+      //     {imageUrl: 'http://tourdehdr.sakuratan.com/site2/wp-content/uploads/2017/10/img2946_title10.jpg',id:11, title:'Building in Sky'}
+      // ]
+    // }
+  // },
+  computed: {
+      meetups () {
+        return this.$store.getters.featuredMeetups
+      },
+      loading () {
+        return this.$store.getters.loading
+      }
+    },
   methods: {
     onLoadMeetup (id) {
       this.$router.push('/title/' + id)
