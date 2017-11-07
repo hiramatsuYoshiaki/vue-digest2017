@@ -6,15 +6,29 @@
     <v-layout row wrap justify-center >
       <v-flex xs12 lg8 xl6>
         <v-card>
-          <v-card-title>
-            <h6 class="white--text"  >{{ meetup.title }}</h6>
-            <!-- <h4 class="white--text">{{ meetups[id-1].title }}</h4> -->
-           
-          </v-card-title>
-         <img
+         
+          <img
             :src="meetup.imageUrl"
             width="100%" height="auto"
           ></img>
+          
+          <v-card-title>
+             <div>
+              <h5 class="white--text"  >{{ meetup.title }}</h5>
+              <p class="white--text"  >{{ meetup.description }}</p>
+            </div>
+            <div>
+             <span class="white--text"  >Stage{{ meetup.stageNo }} </span>
+             <span class="white--text pr-2"  > {{ meetup.category }} </span>
+             <v-icon>place</v-icon><span class="white--textpr pr-2"  > {{ meetup.tag }} </span>
+             <v-icon >event</v-icon><span class="white--text pr-2"  > {{ meetup.date | date }} </span>
+            </div>
+          </v-card-title>
+          <template v-if="userIsCreator">
+              <v-spacer></v-spacer>
+              <app-edit-details-dialog :meetup="meetup"></app-edit-details-dialog>
+              <app-edit-date-dialog :meetup="meetup"></app-edit-date-dialog>
+          </template>
           
           <!-- <v-card-actions>
             <v-spacer></v-spacer>
@@ -22,6 +36,14 @@
             <app-edit-Register-dialog :meetupId="meetup.id"></app-edit-Register-dialog>
           </v-card-actions> -->
         </v-card>
+      </v-flex>
+      <v-flex  xs12 lg8 xl6 style="text-align: right;">
+         <v-btn  @click="onBack">
+                Back
+                  <span slot="loader" class="custom-loader">
+                  <v-icon>cached</v-icon>
+                  </span>
+              </v-btn>
       </v-flex>
     </v-layout>
 
@@ -32,19 +54,24 @@
 <script>
 export default {
  props: ['id'],
+ methods: {
+    onBack () {
+      this.$router.push('/home' )
+    }
+  },
  computed: {
       meetup () {
         return this.$store.getters.loadedMeetup(this.id)
       },
-      // userIsAuthenticated () {
-      //   return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      // },
-      // userIsCreator () {
-      //   if (!this.userIsAuthenticated) {
-      //     return false
-      //   }
-      //   return this.$store.getters.user.id === this.meetup.creatorId
-      // },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      userIsCreator () {
+        if (!this.userIsAuthenticated) {
+          return false
+        }
+        return this.$store.getters.user.id === this.meetup.creatorId
+      },
       loading () {
         return this.$store.getters.loading
       }

@@ -70,7 +70,7 @@
          @click="onLogin"
         >
         <v-icon left dark>lock_open</v-icon>
-        Login
+        <!-- Login -->
       </v-btn>
       <v-btn
         v-if="userIsAuthenticated"
@@ -78,14 +78,14 @@
          @click="onUpload"
         >
         <v-icon left dark>cloud_upload</v-icon>
-        Upload
+        <!-- Upload -->
       </v-btn>
        <v-btn
           v-if="userIsAuthenticated"
           flat
           @click="onLogout">
           <v-icon left dark>exit_to_app</v-icon>
-          Logout
+          <!-- Logout -->
         </v-btn>
     </v-footer>
   </v-app>

@@ -14,22 +14,15 @@
 
     <v-layout row wrap  class="content-inner" v-if="!loading">
       <v-flex xs12 sm11 md10 lg8 xl8>
-      <!-- <v-flex  > -->
+   
         <v-carousel style="cursor: pointer;" hide-controls class="carusel-style">
-          <!-- <v-carousel-item 
-            v-for="meetup in meetups"
-            :src="meetup.imageUrl"
-            :key="meetup.id" 
-            @click="onLoadMeetup(meetup.id)" > -->
-
             <v-carousel-item 
             v-for="meetup in meetups"
-            :key="meetup.id" 
-            @click="onLoadMeetup(meetup.id)" class="item-position">
-            <!-- <div class="title"> 
-               STAGE-{{ meetup.id }} {{ meetup.title }}
-           </div> -->
-             <img :src="meetup.imageUrl" class="img-style">
+            v-if="meetup.type == 'stage'"
+            :key="meetup.id"
+            class="item-position">
+             <img :src="meetup.imageUrl" class="img-style"  @click="onLoadMeetup(meetup.category)"  >
+             <p>{{meetup.stage}}</P>
           </v-carousel-item>
 
         </v-carousel>
@@ -42,42 +35,64 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2" v-if="!loading">
-      <!-- <v-flex xs12 sm10 md8 offset-sm1 offset-md2> -->
-      <v-flex xs12 sm10 md8 >
-        <v-card >
+    
+
+    <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2 " v-if="!loading">
+     
+      <v-flex xs12 sm12 md11 lg8 xl8>
+        <v-card v-if="meetup.type == 'stage'">
           <v-container fluid>
-            <v-layout row>
-              <!-- <v-flex xs5 sm4 md3> -->
-              <v-flex xs6 sm5 md4 lg3 xl3>
-               <div class="image-inner">
-                <img class="image" :src="meetup.imageUrl" alt="lorem" width="100%" height="auto">
-              </div>
-                <!-- <v-card-media  :src="meetup.imageUrl" height="130px" width="auto">
-                </v-card-media> -->
+
+            <v-layout row wrap>
+              <v-flex xs12 sm5 md4 lg3 xl3>
+                <div class="image-inner">
+                  <img class="image" :src="meetup.imageUrl" alt="lorem" width="100%" height="auto">
+                </div>
               </v-flex>
-              <v-flex xs6 sm5 md9>
+            <!-- </v-layout>
+            <v-layout row wrap> -->
+              <v-flex xs12 sm5 md8 lg9 xl9>
                 <v-card-title primary-title>
                   <div>
                     <!-- <p class="white--text mb-0">STAGE {{ meetup.id }}</p> -->
                     <p class="white--text mb-0">STAGE {{ index }}</p>
-                    <p class="white--text mb-0">key {{ meetup.id }}</p>
-                    <h5 class="white--text mb-0">{{ meetup.title }}</h5>
-                    <h5 class="white--text mb-0">{{ meetup.date   }}</h5>
-                    <h5 class="white--text mb-0">{{ meetup.location }}</h5>
+                    <!-- <p class="white--text mb-0">key {{ meetup.id }}</p> -->
+                    <h5 class="white--text mb-0"> {{ meetup.title }}</h5>
+                    <p class="white--text mb-0"> {{ meetup.date | date }}</p>
+                    <!-- <h5 class="white--text mb-0">location {{ meetup.location }}</h5>
+                    <h5 class="white--text mb-0">creatorId {{ meetup.creatorId }}</h5>
+                    <h5 class="white--text mb-0">category {{ meetup.category }}</h5>
+                    <h5 class="white--text mb-0">stageNo {{ meetup.stageNo }}</h5>
+                    <h5 class="white--text mb-0">tag {{ meetup.tag }}</h5>
+                    <h5 class="white--text mb-0">type {{ meetup.type }}</h5> -->
                     <!-- <h5 class="white--text mb-0">{{ meetup.description }}</h5> -->
-                   
                     <!-- <div>{{ meetup.date | date }}</div> -->
                   </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat :to="'/title/' + meetup.id">
-                    <v-icon left light>arrow_forward</v-icon>
+                 </v-card-title>
+              </v-flex>
+            <!-- </v-layout>
+            <v-layout row wrap>  -->
+              <v-flex xs12 sm12 md12 lg12 xl12 >
+                <v-card-actions >
+                  <v-btn flat :to="'/title/' + meetup.category" >
+                    <v-icon left dark>arrow_forward</v-icon>
                     View Stage 
                   </v-btn>
                 </v-card-actions>
               </v-flex>
             </v-layout>
+            <v-layout row>
+
+            </v-layout>
+            <!-- <v-flex xs12 sm12 md12 lg12 xl12 >
+                <v-card-actions >
+                  <v-btn flat :to="'/title/' + meetup.category" >
+                    <v-icon left dark>arrow_forward</v-icon>
+                    View Stage 
+                  </v-btn>
+                </v-card-actions>
+              </v-flex> -->
+
           </v-container>
         </v-card>
       </v-flex>
@@ -117,6 +132,7 @@ export default {
     },
   methods: {
     onLoadMeetup (id) {
+       console.log('home onLoadMeetup id ' + id)
       this.$router.push('/title/' + id)
     }
   }

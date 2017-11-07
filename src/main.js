@@ -9,16 +9,30 @@ import App from './App'
 import * as firebase from 'firebase'
 import router from './router'
 import { store } from './store'
+import DateFilter from './filters/date'
+import AlertCmp from './components/Shared/Alert.vue'
+import EditDetailsDialog from './components/digest/edit/EditDetailsDialog.vue'
+import EditDateDialog from './components/digest/edit/EditDateDialog.vue'
+
+
 
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
+
+Vue.filter('date', DateFilter)
+Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-details-dialog', EditDetailsDialog)
+Vue.component('app-edit-date-dialog', EditDateDialog)
+
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  
   // template: '<App/>',
   // components: { App }
   render: h => h(App),

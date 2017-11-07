@@ -28,9 +28,11 @@
           <v-layout row wrap>
             <v-flex xs4 v-for="meetup in meetups"
             :key="meetup.id" 
+            v-if="meetup.type == 'stage' &&  getYear( meetup.date) == '2017'" 
             @click="onLoadMeetup(meetup.id)" style="cursor: pointer;">
               <div class="image-inner" >
                 <img class="image" v-bind:src="meetup.imageUrl" alt="lorem" width="100%" height="auto" >
+                <!-- {{  getYear( meetup.date) }} -->
               </div>
             </v-flex>
           </v-layout>
@@ -50,7 +52,19 @@
       </v-card>
        
       </v-flex>
+      </v-layout>
+      
+      <v-layout row wrap >
+      <v-flex xs12 sm10 md8 offset-sm1 offset-md2 style="text-align: right;">
+         <v-btn  @click="onBack">
+                Back
+                  <span slot="loader" class="custom-loader">
+                  <v-icon>cached</v-icon>
+                  </span>
+              </v-btn>
+      </v-flex>
     </v-layout>
+    
     
     
   </v-container>
@@ -58,6 +72,7 @@
 
 <script>
 export default {
+  props: ['id'],
   computed: {
       meetups () {
         return this.$store.getters.featuredMeetups
@@ -86,8 +101,15 @@ export default {
 
   methods: {
     onLoadMeetup (id) {
-      this.$router.push('/title/' + id)
-    }
+      this.$router.push('/post/' + id)
+    },
+    getYear( value) {
+       const date = new Date(value)
+     return  date.getFullYear().toString()
+    },
+    onBack () {
+      this.$router.push('/home' )
+    },
   }
 }
 </script>

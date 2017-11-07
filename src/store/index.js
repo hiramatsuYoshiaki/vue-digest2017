@@ -29,7 +29,11 @@ export const store = new Vuex.Store({
         title: '',
         date: new Date(),
         location: '',
-        description: ''
+        description: '',
+        category:'',
+        stageNo: '',
+        tag: '',
+        type: ''
       }
     ],
     user: null,
@@ -66,9 +70,20 @@ export const store = new Vuex.Store({
       if (payload.description) {
         meetup.description = payload.description
       }
+      
+      if (payload.tag) {
+        updateObj.tag = payload.tag
+      }
+      if (payload.stageNo) {
+        updateObj.stageNo = payload.stageNo
+      }
+
       if (payload.date) {
         meetup.date = payload.date
       }
+
+
+
     },
     setUser (state, payload) {
       state.user = payload
@@ -118,7 +133,8 @@ export const store = new Vuex.Store({
     },
     loadMeetups ({commit}) {
       commit('setLoading', true)
-      firebase.database().ref('meetups').once('value')
+      // firebase.database().ref('meetups').once('value')
+      firebase.database().ref('tourdehdr').once('value')
         .then((data) => {
           const meetups = []
           const obj = data.val()
@@ -130,7 +146,12 @@ export const store = new Vuex.Store({
               imageUrl: obj[key].imageUrl,
               date: obj[key].date,
               location: obj[key].location,
-              creatorId: obj[key].creatorId
+              creatorId: obj[key].creatorId,
+              category: obj[key].category,
+              stageNo: obj[key].stageNo,
+              tag: obj[key].tag,
+              type: obj[key].type
+              
             })
           }
           commit('setLoadedMeetups', meetups)
@@ -146,6 +167,10 @@ export const store = new Vuex.Store({
     createMeetup ({commit, getters}, payload) {
       const meetup = {
         title: payload.title,
+        category:  payload.category,
+        stageNo:  payload.stageNo,
+        tag:  payload.tag,
+        type:  payload.type,
         location: payload.location,
         // imageUrl: payload.imageUrl,
         description: payload.description,
@@ -154,24 +179,18 @@ export const store = new Vuex.Store({
       }
       let imageUrl
       let key
-      firebase.database().ref('meetups').push(meetup)
-        .then((data) => {
-          // const key = data.key
-          // commit('createMeetup', {
-          //   ...meetup,
-          //   id: key
-          // })
-          key = data.key
+      firebase.database().ref('tourdehdr').push(meetup).then((data) => {
+         key = data.key
           return key
         })
         .then(key => {
           const filename = payload.image.name
           const ext = filename.slice(filename.lastIndexOf('.'))
-          return firebase.storage().ref('meetups/' + key + '.' + ext).put(payload.image)
+          return firebase.storage().ref('tourdehdr/' + key + '.' + ext).put(payload.image)
         })
         .then(fileData => {
           imageUrl = fileData.metadata.downloadURLs[0]
-          return firebase.database().ref('meetups').child(key).update({imageUrl: imageUrl})
+          return firebase.database().ref('tourdehdr').child(key).update({imageUrl: imageUrl})
         })
         .then(() => {
           commit('createMeetup', {
@@ -183,6 +202,29 @@ export const store = new Vuex.Store({
         .catch((error) => {
           console.log(error)
         })
+        // firebase.database().ref('meetups').push(meetup).then((data) => {
+        //   key = data.key
+        //    return key
+        //  })
+        //  .then(key => {
+        //    const filename = payload.image.name
+        //    const ext = filename.slice(filename.lastIndexOf('.'))
+        //    return firebase.storage().ref('meetups/' + key + '.' + ext).put(payload.image)
+        //  })
+        //  .then(fileData => {
+        //    imageUrl = fileData.metadata.downloadURLs[0]
+        //    return firebase.database().ref('meetups').child(key).update({imageUrl: imageUrl})
+        //  })
+        //  .then(() => {
+        //    commit('createMeetup', {
+        //      ...meetup,
+        //      imageUrl: imageUrl,
+        //      id: key
+        //    })
+        //  })
+        //  .catch((error) => {
+        //    console.log(error)
+        //  })
       // Reach out to firebase and store it
     },
     updateMeetupData ({commit}, payload) {
@@ -195,11 +237,21 @@ export const store = new Vuex.Store({
       if (payload.description) {
         updateObj.description = payload.description
       }
+      if (payload.tag) {
+        updateObj.tag = payload.tag
+      }
+      if (payload.stageNo) {
+        updateObj.stageNo = payload.stageNo
+      }
+
+
+
+
       if (payload.date) {
         updateObj.date = payload.date
       }
 
-      firebase.database().ref('meetups').child(payload.id).update(updateObj)
+      firebase.database().ref('tourdehdr').child(payload.id).update(updateObj)
         .then(() => {
           commit('setLoading', false)
           commit('updateMeetup', payload)
@@ -279,13 +331,22 @@ export const store = new Vuex.Store({
     //   return getters.loadedMeetups.slice(0, 5)
       return getters.loadedMeetups
     },
+    
     loadedMeetup (state) {
+      console.log('loadedMeetupStage')
+      console.log('state ' + state )
       return (meetupId) => {
+        console.log('meetupId ' + meetupId)
         return state.loadedMeetups.find((meetup) => {
+          console.log('meetup.id ' + meetup.id)
+          console.log('meetup.stage ' + meetup.stage)
+          console.log('meetupid ' + meetup.stage)
+
           return meetup.id === meetupId
         })
       }
     },
+    
     user (state) {
       return state.user
     },
@@ -297,3 +358,12 @@ export const store = new Vuex.Store({
     }
   }
 })
+// var filtered = [12, 5, 8, 130, 44].filter(function(element, index, array) {
+//   return (element >= 10);
+// });
+// loadedMeetupCategory (state) {
+//   return (category) => {
+//     return state.loadedMeetups.filter((meetup) => {
+//       return meetup.category === category
+//     })
+//   }

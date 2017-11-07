@@ -18,6 +18,48 @@
                 required></v-text-field>
             </v-flex>
           </v-layout>
+
+
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="category"
+                label="Category"
+                id="category"
+                v-model="category"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="stageNo"
+                label="StageNo"
+                id="stageNo"
+                v-model="stageNo"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="tag"
+                label="Tag"
+                id="tag"
+                v-model="tag"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="type"
+                label="Type"
+                id="type"
+                v-model="type"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
@@ -63,7 +105,8 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <h4>Choose a Data & Time</h4>
+              <!-- <h4>Choose a Data & Time</h4> -->
+              <p>Post Data </p>
             </v-flex>
           </v-layout>
           <v-layout row class="mb-2">
@@ -71,18 +114,26 @@
               <v-date-picker v-model="date"></v-date-picker>
             </v-flex>
           </v-layout>
-          <v-layout row>
+          <!-- <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-time-picker v-model="time" format="24hr"></v-time-picker>
             </v-flex>
-          </v-layout>
+          </v-layout> -->
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-btn
                 class="primary"
                 :disabled="!formIsValid"
                 type="submit">Create Meetup</v-btn>
+              <v-btn  @click="onCancel">
+                Cancel
+                  <span slot="loader" class="custom-loader">
+                  <v-icon>cached</v-icon>
+                  </span>
+              </v-btn>
+
             </v-flex>
+             
           </v-layout>
         </form>
       </v-flex>
@@ -100,7 +151,11 @@
         description: '',
         date: new Date(),
         time: new Date(),
-        image: null
+        image: null,
+        category: '',
+        stageNo: '',
+        tag: '',
+        type: ''
       }
     },
     computed: {
@@ -108,7 +163,11 @@
         return this.title !== '' &&
           this.location !== '' &&
           this.imageUrl !== '' &&
-          this.description !== ''
+          this.description !== ''&&
+          this.category !== ''&&
+          this.stageNo !== ''&&
+          this.tag !== ''&&
+          this.type !== ''
       },
       submittableDateTime () {
         const date = new Date(this.date)
@@ -134,6 +193,10 @@
         }
         const meetupData = {
           title: this.title,
+          category: this.category,
+          stageNo: this.stageNo,
+          tag: this.tag,
+          type: this.type,
           location: this.location,
           // imageUrl: this.imageUrl,
           image: this.image,
@@ -158,7 +221,10 @@
         })
         fileReader.readAsDataURL(file[0])
         this.image = file[0]
-      }
+      },
+      onCancel () {
+        this.$router.push('/home' )
+      },
     }
   }
 </script>
