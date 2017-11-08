@@ -26,7 +26,7 @@
             </v-flex>
           </v-layout> -->
           <v-layout row wrap>
-            <v-flex xs4 v-for="meetup in meetups"
+            <v-flex xs12 sm12 md6 lg4 x4 v-for="meetup in meetups"
             :key="meetup.id" 
             v-if="meetup.type == 'stage' &&  getYear( meetup.date) == '2017'" 
             @click="onLoadMeetup(meetup.id)" style="cursor: pointer;">

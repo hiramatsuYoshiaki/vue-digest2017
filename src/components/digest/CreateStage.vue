@@ -2,12 +2,32 @@
   <v-container>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h4>Create a new Meetup</h4>
+        <h5>新規登録</h5>
       </v-flex>
     </v-layout>
     <v-layout row>
       <v-flex xs12>
         <form @submit.prevent="onCreateMeetup">
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="stageNo"
+                label="StageNo"
+                id="stageNo"
+                v-model="stageNo"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+                name="type"
+                label="Type"
+                id="type"
+                v-model="type"
+                required></v-text-field>
+            </v-flex>
+          </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
@@ -30,16 +50,7 @@
                 required></v-text-field>
             </v-flex>
           </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="stageNo"
-                label="StageNo"
-                id="stageNo"
-                v-model="stageNo"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
+         
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
@@ -50,16 +61,7 @@
                 required></v-text-field>
             </v-flex>
           </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="type"
-                label="Type"
-                id="type"
-                v-model="type"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
+          
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
@@ -106,7 +108,7 @@
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <!-- <h4>Choose a Data & Time</h4> -->
-              <p>Post Data </p>
+              <p>Post Date </p>
             </v-flex>
           </v-layout>
           <v-layout row class="mb-2">

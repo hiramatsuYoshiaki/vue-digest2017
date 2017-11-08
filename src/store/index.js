@@ -324,7 +324,15 @@ export const store = new Vuex.Store({
   getters: {
     loadedMeetups (state) {
       return state.loadedMeetups.sort((meetupA, meetupB) => {
-        return meetupA.date > meetupB.date
+        
+        // console.log('titelA: ' + meetupA.title)
+        // console.log('titelB: ' + meetupB.title)
+        // console.log('dateA: ' + meetupA.date)
+        // console.log('dateB: ' + meetupB.date)
+
+        // return meetupA.date > meetupB.date
+        return( meetupA.date > meetupB.date ? 1 : -1)
+        
       })
     },
     featuredMeetups (state, getters) {
@@ -333,14 +341,14 @@ export const store = new Vuex.Store({
     },
     
     loadedMeetup (state) {
-      console.log('loadedMeetupStage')
-      console.log('state ' + state )
+      // console.log('loadedMeetupStage')
+      // console.log('state ' + state )
       return (meetupId) => {
-        console.log('meetupId ' + meetupId)
+        // console.log('meetupId ' + meetupId)
         return state.loadedMeetups.find((meetup) => {
-          console.log('meetup.id ' + meetup.id)
-          console.log('meetup.stage ' + meetup.stage)
-          console.log('meetupid ' + meetup.stage)
+          // console.log('meetup.id ' + meetup.id)
+          // console.log('meetup.stage ' + meetup.stage)
+          // console.log('meetupid ' + meetup.stage)
 
           return meetup.id === meetupId
         })

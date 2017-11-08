@@ -41,7 +41,7 @@
 
     <v-layout row wrap v-if="!loading">
       <v-flex xs12 sm11 md8 >
-         <h5 class="white--text pt-3">TOURdeHDR+2017 STAGE POSTS</h5>
+         <h5 class="white--text pt-3">TOURdeHDR+2017 STAGE DIGEST</h5>
       </v-flex>
     </v-layout>
     
@@ -51,7 +51,7 @@
     
     <v-layout row wrap >
       <!-- <v-flex xs12 sm10 md8 offset-sm1 offset-md2> -->
-       <v-flex xs12 sm10 md8 >
+       <v-flex xs12 sm11 md10 lg8 xl8 >
 
       <v-card class="grid " >
         <!-- <v-toolbar color="white" flat>
@@ -74,7 +74,7 @@
             </v-flex>
           </v-layout> -->
           <v-layout row wrap class="pt-3 pl-1 pr-1">
-            <v-flex xs4 v-for="meetup in meetups"
+            <v-flex xs12 sm12 md6 lg4 x4 v-for="meetup in meetups"
             :key="meetup.id" 
             v-if="meetup.category == id && meetup.type == 'post'"
             @click="onLoadMeetup (meetup.id)" style="cursor: pointer;">
@@ -148,7 +148,7 @@ export default {
     onLoadMeetup (id) {
       this.$router.push('/post/' + id)
     },
-     onBack () {
+    onBack () {
       this.$router.push('/home' )
     },
   }

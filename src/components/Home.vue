@@ -22,7 +22,7 @@
             :key="meetup.id"
             class="item-position">
              <img :src="meetup.imageUrl" class="img-style"  @click="onLoadMeetup(meetup.category)"  >
-             <p>{{meetup.stage}}</P>
+             <!-- <p>{{meetup.stage}}</P> -->
           </v-carousel-item>
 
         </v-carousel>
@@ -37,10 +37,12 @@
 
     
 
-    <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2 " v-if="!loading">
+    <!-- <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2 " v-if="!loading"> -->
+    <v-layout row wrap v-for="(meetup, index) in meetups" :key="meetup.id" class="mb-2" v-if="meetup.type == 'stage'">
      
       <v-flex xs12 sm12 md11 lg8 xl8>
-        <v-card v-if="meetup.type == 'stage'">
+        <!-- <v-card v-if="meetup.type == 'stage'"> -->
+        <v-card v-if="!loading">
           <v-container fluid>
 
             <v-layout row wrap>
@@ -55,7 +57,7 @@
                 <v-card-title primary-title>
                   <div>
                     <!-- <p class="white--text mb-0">STAGE {{ meetup.id }}</p> -->
-                    <p class="white--text mb-0">STAGE {{ index }}</p>
+                    <p class="white--text mb-0">STAGE {{ meetup.stageNo  }}</p>
                     <!-- <p class="white--text mb-0">key {{ meetup.id }}</p> -->
                     <h5 class="white--text mb-0"> {{ meetup.title }}</h5>
                     <p class="white--text mb-0"> {{ meetup.date | date }}</p>
