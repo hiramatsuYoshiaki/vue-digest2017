@@ -4,7 +4,7 @@
     
 
     <v-layout row wrap justify-center >
-      <v-flex xs12 lg8 xl6>
+      <v-flex xs12 lg8 xl8>
         <v-card>
          
           <img
@@ -17,6 +17,8 @@
               <h5 class="white--text"  >{{ meetup.title }}</h5>
               <p class="white--text"  >{{ meetup.description }}</p>
             </div>
+          </v-card-title>
+          <v-card-title>
             <div>
              <span class="white--text"  >Stage{{ meetup.stageNo }} </span>
              <span class="white--text pr-2"  > {{ meetup.category }} </span>
@@ -37,7 +39,7 @@
           </v-card-actions> -->
         </v-card>
       </v-flex>
-      <v-flex  xs12 lg8 xl6 style="text-align: right;">
+      <v-flex  xs12 lg8 xl8 style="text-align: right;">
          <v-btn  @click="onBack">
                 Back
                   <span slot="loader" class="custom-loader">

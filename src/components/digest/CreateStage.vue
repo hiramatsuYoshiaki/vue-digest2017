@@ -15,6 +15,7 @@
                 label="StageNo"
                 id="stageNo"
                 v-model="stageNo"
+                
                 required></v-text-field>
             </v-flex>
           </v-layout>
@@ -25,6 +26,7 @@
                 label="Type"
                 id="type"
                 v-model="type"
+                placeholder="post"
                 required></v-text-field>
             </v-flex>
           </v-layout>
